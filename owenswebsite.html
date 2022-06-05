@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+<link href="https://fonts.googleapis.com/css2?family=Gentium+Plus:wght@700&display=swap" rel="stylesheet">
+    <title>The owen silberman website</title>
+</head>
+<body>
+    <header>
+        <h2>Owen silberman Fan website 🏈</h2>
+        <a href="#home">Home</a><a href="#cont"></a><a href="#about">About</a><a href="#games">Games</a>
+    </header>
+    <div id="home">
+        <h2>Owen Silberman Fans!!</h2>
+        <p>Welcoome to the fan website</p>
+        <a href="https://www.youtube.com/channel/UCry37mlk5ChdSNUCE0YITYA">Channel</a>
+    </div>
+    <div id="cont">
+        <form action="https://formsubmit.co/oreowen116@gmail.com" method="POST">
+            <input type="text" name="name" placeholder="name" required>
+            <input type="email" name="email" placeholder="email" required>
+            <input type="text" name="Message" placeholder="What do you have to say...?" required>
+            <button type="submit">Send</button>
+       </form>
+    </div>
+    <div id="about">
+        <h2>About</h2>
+        <p>Owen silberman whas a channel created in 2016 by none other than owen silberman. Owen silberman Likes making videos to 
+            inform, educate, and crack up "viewers". Owen Loves making videos, altough he is not very good. Owen Thinks that people actully like him.
+            But he should really stop being a idiot.
+        </p>
+        <iframe width="706" height="397" src="https://www.youtube.com/embed/wqUpIYCWso8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+
+
+    </div>
+    <div id="games">
+        <h2>Subscriber clicker</h2>
+        <p id="number">0</p>
+        <button onclick="inc()">Subscrie</button>
+    </div>
+    <script>
+        function inc() {
+            var number = document.getElementById("number");
+            number.innerHTML = number++;
+        }
+    </script>
+    <style>
+        * {
+         margin: 0;
+         padding: 0;
+         font-family: 'Gentium Plus', serif;
+
+        }
+        header {
+            width: 100%;
+            height: 60px;
+            background-color: black;
+            color: white;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+        a {
+            color: white;
+            text-decoration: none;
+            transition: .5s;
+        }
+        a:hover {
+            color: lightblue;
+        }
+        body {
+            text-align: center;
+
+        }
+        div {
+            width: 100%;
+            height: 300px;
+            background-color: black;
+            margin-top: 40px;
+        }
+    </style>
+</body>
+</html>
