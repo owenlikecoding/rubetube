@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RubeTube</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter&family=Fredoka:wght@500&family=Inter:wght@700&family=Poppins:wght@300&family=Roboto+Slab:wght@300&family=Varela&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <header>
+        <h1>RubeTube</h1>
+        <a href="./upload.html">Upload</a>
+        <img id="proPic">
+    </header>
+    <div id="videoGrid">
+
+    </div>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-app.js";
+        import { getDatabase, get, set, ref, child, update, remove } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-database.js";
+
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyB8X25Q7f2w8c3FWAo1v6YtOMJVUeIcXHw",
+            authDomain: "rubetube-e8d80.firebaseapp.com",
+            projectId: "rubetube-e8d80",
+            storageBucket: "rubetube-e8d80.appspot.com",
+            messagingSenderId: "644415927794",
+            appId: "1:644415927794:web:5ef24f41d299b0a339676b"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const body = document.querySelector('body');
+
+        // loading Func
+        body.onload = function () {
+            var uid = window.localStorage.getItem("user");
+            var displayName = window.localStorage.getItem("displayName");
+            var photoURL = window.localStorage.getItem("photoURL");
+            var email = window.localStorage.getItem("email");
+
+            const dbref = ref(db);
+            var proPic = document.getElementById("proPic");
+            proPic.src = photoURL;
+
+
+            getVideos()
+        }
+
+        function getVideos() {
+            const dbref = ref(db);
+            get(child(dbref, "videos")).then(function (snapshot) {
+                snapshot.forEach(function (childSnapshot) {
+                    var videoGrid = document.getElementById("videoGrid");
+                    var childKey = childSnapshot.key;
+                    var childData = childSnapshot.val();
+                    var video = document.createElement("iframe");
+                    video.src = childData.file;
+                    video.controls = true;
+                    video.autoplay = true;
+                    videoGrid.appendChild(video);
+                    // add the name of the video in the iframe
+                    var videoName = document.createElement("h2");
+                    videoName.innerHTML = childData.name;
+                    videoGrid.appendChild(videoName);
+                    // add the description of the video in the iframe
+                    var videoDesc = document.createElement("p");
+                    videoDesc.innerHTML = childData.description;
+                    videoGrid.appendChild(videoDesc);
+                    var videoUrl = document.createElement("a");
+                    videoUrl.innerHTML = childData.file;
+                    videoGrid.appendChild(videoUrl);
+                    // expand the video on the click of the expand button
+                    var expandButton = document.createElement("button");
+                    expandButton.innerHTML = "Expand";
+                    expandButton.onclick = function () {
+                        video.style.width = "100%";
+                        video.style.height = "100vh";
+                        video.style.marginLeft = "0";
+                        video.style.padding = "0";
+                        // hide the h2 and the p
+                        videoName.style.display = "none";
+                        videoDesc.style.display = "none";
+                        // hide the expand button
+                        expandButton.style.display = "none";
+                        // add the contract button
+                        var contractButton = document.createElement("button");
+                        contractButton.innerHTML = "Contract";
+                        contractButton.onclick = function () {
+                            video.style.width = "50%";
+                            video.style.height = "50vh";
+                            video.style.marginLeft = "25%";
+                            video.style.padding = "0";
+                            // show the h2 and the p
+                            videoName.style.display = "block";
+                            videoDesc.style.display = "block";
+                            // show the expand button
+                            expandButton.style.display = "block";
+                            // hide the link
+                            videoUrl.style.display = "none";
+                            // hide the contract button
+                            contractButton.style.display = "none";
+                        }
+                    }
+                    videoGrid.appendChild(expandButton);
+                    // collapse the video on the click of the collapse button
+                    
+                });
+            });
+        }
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: rgb(85, 59, 255);
+            color: rgb(255, 255, 255);
+        }
+
+        header {
+            background-color: rgb(255, 140, 0);
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+        a { 
+            color: white;
+            text-decoration: none;
+            transition: .5s;
+            margin-left: 35%;
+        }
+        a:hover {
+            color: rgb(85, 59, 255);
+        }
+        
+        iframe { 
+            padding: 10%;
+            background-color: rgb(53, 233, 140);
+            margin-bottom: -10%;
+            margin-left: 30%;
+            margin-top: 100px;
+            border-radius: 10px;
+
+        }
+        h2, p {
+            color: black;
+            text-align: center;
+        }
+        header img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+        }
+        #videoGrid {
+           width: 100%;
+        }
+    </style>
+
+</body>
+
+</html>

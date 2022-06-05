@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter&family=Fredoka:wght@500&family=Inter:wght@700&family=Poppins:wght@300&family=Roboto+Slab:wght@300&family=Varela&display=swap" rel="stylesheet">
+    <title>Upload a Video</title>
+</head>
+
+<body>
+
+    <a href="./home.html">Home</a>
+    <div id="upload">
+       
+            <label for="Namme Of Video">Name Of Video:</label><br>
+            <input type="text" name="Namme Of Video" id="name"><br>
+            <input type="text" name="file" id="file" placeholder="video iframe"><br>
+            <label for="">Create a video url with:</label><br>
+            <a href="https://www.kapwing.com">Capwing</a><br>
+            <textarea name="desscriptiom" id="desc" cols="30" rows="10"></textarea>
+            <br>
+            <button id="submit">Submit</button>
+        
+    </div>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-app.js";
+        import {getDatabase, ref, set, get, update, remove} from "https://www.gstatic.com/firebasejs/9.8.2/firebase-database.js";
+
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyB8X25Q7f2w8c3FWAo1v6YtOMJVUeIcXHw",
+            authDomain: "rubetube-e8d80.firebaseapp.com",
+            projectId: "rubetube-e8d80",
+            storageBucket: "rubetube-e8d80.appspot.com",
+            messagingSenderId: "644415927794",
+            appId: "1:644415927794:web:5ef24f41d299b0a339676b"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const body = document.querySelector('body');
+
+        // loading Func
+        var uid = window.localStorage.getItem("user");
+        var displayName = window.localStorage.getItem("displayName");
+        var photoURL = window.localStorage.getItem("photoURL");
+        var email = window.localStorage.getItem("email");
+
+
+        // dom vars
+        var name = document.getElementById("name");
+        var file = document.getElementById("file");
+        var desc = document.getElementById("desc");
+        var submit = document.getElementById("submit");
+        
+        
+        // upload Func
+       submit.addEventListener("click", function(){
+           // add the file, file name, and description to the database
+                set(ref(db, "videos/" + name.value), {
+                    name: name.value,
+                    file: file.value,
+                    description: desc.value,
+                    uid: uid,
+                    displayName: displayName,
+                    photoURL: photoURL,
+                    email: email
+                });
+                
+       });
+    </script>
+    <style>
+        * {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+        }
+        body {
+            text-align: center;
+            
+        }
+    </style>
+</body>
+
+</html>
